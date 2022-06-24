@@ -31,3 +31,8 @@ https://user-images.githubusercontent.com/20162553/175613619-5054750e-9846-4168-
 - Mantine
 - React Testing Library + Jest + Playwright (e2e)
 
+## The main project with the latest code can be found here:
+
+https://github.com/stanriders/circleforms
+
+This fork was created just to showcase some of the functionality without making you register an account.
