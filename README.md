@@ -1,7 +1,7 @@
 # Circle Forms 
 
 This is a google forms inspired project adopted for an integration with a rythm game called osu!. 
-Below is a showcase of some of the features i've built in collaboration with the team:
+Below is a showcase of some of the features i've built in collaboration with the team.
 
 ## Stack
 - c# backend
