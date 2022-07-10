@@ -3,6 +3,16 @@
 This is a google forms inspired project adopted for an integration with a rythm game called osu!. 
 Below is a showcase of some of the features i've built in collaboration with the team:
 
+## Stack
+- c# backend
+- React 
+- Next.js
+- Tailwind
+- React Hook Form
+- Mantine
+- React Testing Library + Jest + Playwright (e2e)
+
+
 ## Form creation
 
 Probably the most challenging part of this application, managing complex dynamic state of multiple question types, with arbitrary number of options + the questions can change from one type to another one.
@@ -22,14 +32,7 @@ https://user-images.githubusercontent.com/20162553/175612493-9500cb39-cc3a-4121-
 https://user-images.githubusercontent.com/20162553/175613619-5054750e-9846-4168-85c0-bcc59a8b25cb.mp4
 
 
-## Stack
-- c# backend
-- React 
-- Next.js
-- Tailwind
-- React Hook Form
-- Mantine
-- React Testing Library + Jest + Playwright (e2e)
+
 
 ## The main project with the latest code can be found here:
 
