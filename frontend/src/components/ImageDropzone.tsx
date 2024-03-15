@@ -80,8 +80,8 @@ const ImageDropzone = ({
 
   const ImageSelectText = () => (
     <>
-      <p className="mb-1 text-xl font-semibold select-none">{t("file.dragImageHere")}</p>
-      <p className="text-xs font-medium text-white select-none text-opacity-20">
+      <p className="mb-1 select-none text-xl font-semibold">{t("file.dragImageHere")}</p>
+      <p className="select-none text-xs font-medium text-white text-opacity-20">
         {t("file.orPressButton")}
       </p>
       <Button theme="secondary" classname="my-2 pointer-events-none">
@@ -95,19 +95,19 @@ const ImageDropzone = ({
 
   return (
     <div
-      className={classNames("flex flex-col text-center w-full h-full cursor-pointer", classname)}
+      className={classNames("flex h-full w-full cursor-pointer flex-col text-center", classname)}
       {...getRootProps()}
     >
       <p className="text-2xl">{headingText}</p>
       <div
         className={classNames(
-          "flex flex-col items-center justify-center bg-black-lighter h-full w-full rounded-20 border-4 border-dashed border-grey-border mt-1 py-10 transition hover:brightness-110 focus:brightness-150",
+          "mt-1 flex h-full w-full flex-col items-center justify-center rounded-20 border-4 border-dashed border-grey-border bg-black-lighter py-10 transition hover:brightness-110 focus:brightness-150",
           isDragActive ? "brightness-150" : ""
         )}
       >
         {showDefaultPreview && (
           <img
-            className="object-contain h-56"
+            className="h-56 object-contain"
             src={defaultPreview}
             alt={"Image preview"}
             key={defaultPreview}
@@ -120,7 +120,7 @@ const ImageDropzone = ({
         {file && (
           <div>
             <img
-              className="object-contain h-56"
+              className="h-56 object-contain"
               src={imgSrc}
               alt={file.name}
               key={file.name}

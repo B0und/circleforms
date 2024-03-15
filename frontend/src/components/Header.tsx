@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import SVG from "react-inlinesvg";
 import { Menu, MenuButton, MenuItem, MenuList } from "@reach/menu-button";
 import VisuallyHidden from "@reach/visually-hidden";
@@ -9,21 +8,20 @@ import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
 
 import { navLinks } from "../constants";
-import UserContext from "../context/UserContext";
 import useAuth from "../hooks/useAuth";
 import { Locales } from "../types/common-types";
 import i18n from "../utils/i18n";
 
 import Button from "./Button";
 import Flag from "./Flag";
+import SkipNavButton from "./SkipNavButton";
 
 const languages = Object.values(i18n);
 
 export default function Header() {
   const t = useTranslations("global");
   const router = useRouter();
-  const { user } = useContext(UserContext);
-  const { logout } = useAuth();
+  const { data: user } = useAuth();
 
   function changeLocale(locale: Locales) {
     router.push(
@@ -41,7 +39,10 @@ export default function Header() {
   }
 
   return (
-    <header className="flex fixed top-0 z-navbar justify-between items-center py-3 px-4 w-full text-white bg-black md:px-16 lg:px-32">
+    <header className="fixed top-0 z-navbar flex w-full items-center justify-between bg-black py-3 px-4 text-white md:px-16 lg:px-32">
+      <SkipNavButton>
+        <button type="button">Skip Navigation Links</button>
+      </SkipNavButton>
       <div className="flex items-center">
         <Link href="/" passHref>
           <a>
@@ -63,26 +64,34 @@ export default function Header() {
         </ul>
       </div>
 
-      <div className="flex gap-x-3 items-center">
+      <div className="flex items-center gap-x-3">
         {(user && (
           <Menu>
-            <MenuButton>
-              <div className="flex gap-x-2 items-center pl-4 font-bold bg-black rounded-70 border-2 border-pink">
+            <MenuButton data-testid="profileButton">
+              <div className="flex items-center gap-x-2 rounded-70 border-2 border-pink bg-black pl-4 font-bold">
                 <span>{user?.osu?.username}</span>
                 <img
-                  className="m-1 w-9 h-9 rounded-70"
+                  className="m-1 h-9 w-9 rounded-70"
                   src={user?.osu?.avatar_url || ""}
                   alt={user?.osu?.username!}
                 />
               </div>
             </MenuButton>
             <MenuList className="slide-down">
-              <MenuItem onSelect={() => router.push("/answers")}>Answers</MenuItem>
-              <MenuItem onSelect={() => router.push("/dashboard")}>
+              <MenuItem data-testid="manageAnswers" onSelect={() => router.push("/answers")}>
+                Answers
+              </MenuItem>
+              <MenuItem data-testid="manageForms" onSelect={() => router.push("/dashboard")}>
                 {t("navbar.dashboard")}
               </MenuItem>
-              <MenuItem onSelect={() => router.push("/settings")}>{t("navbar.settings")}</MenuItem>
-              <MenuItem className="danger" onSelect={logout}>
+              <MenuItem data-testid="settingsButton" onSelect={() => router.push("/settings")}>
+                {t("navbar.settings")}
+              </MenuItem>
+              <MenuItem
+                data-testid="logoutButton"
+                className="danger"
+                onSelect={() => router.push("/api/OAuth/signout")}
+              >
                 {t("navbar.logout")}
               </MenuItem>
             </MenuList>
@@ -95,7 +104,7 @@ export default function Header() {
 
         <Menu>
           <MenuButton>
-            <div className="flex justify-center items-center p-2 bg-black-lightest rounded-7">
+            <div className="flex items-center justify-center rounded-7 bg-black-lightest p-2">
               <Flag locale={router.locale as Locales} />
             </div>
           </MenuButton>
@@ -103,7 +112,7 @@ export default function Header() {
             {languages.map((language) => {
               return (
                 <MenuItem
-                  className="group menu-language__item"
+                  className="menu-language__item group"
                   key={language.locale}
                   onSelect={() => changeLocale(language.locale as Locales)}
                 >

@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useMutation } from "react-query";
-import { DevTool } from "@hookform/devtools";
+// import { DevTool } from "@hookform/devtools";
 import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
-import UserContext from "src/context/UserContext";
+import useAuth from "src/hooks/useAuth";
 import { AsyncReturnType, sleep } from "src/utils/misc";
 import { debounce } from "ts-debounce";
 
@@ -38,12 +37,12 @@ const ResponseSubmission = ({
 }: IResponseSubmission) => {
   const t = useTranslations();
   const router = useRouter();
-  const { user } = useContext(UserContext);
+  const { data: user } = useAuth();
 
   // Form settings
   const {
     register,
-    control,
+    // control,
     handleSubmit,
     formState: { errors }
   } = useForm<FormData>({ mode: "onBlur", defaultValues: initialUserAnswers });
@@ -111,11 +110,10 @@ const ResponseSubmission = ({
 
   return (
     <>
-      <Toaster />
       <section className="container mb-12">
         {/* background rounded image */}
         <div
-          className="w-full h-60 bg-cover rounded-t-70"
+          className="h-60 w-full rounded-t-70 bg-cover"
           style={{
             backgroundImage: `
               linear-gradient(180deg, rgba(19, 19, 19, 0) -35.06%, #0F0F0F 100%),
@@ -129,19 +127,20 @@ const ResponseSubmission = ({
           {post?.questions?.map((question) =>
             switchQuestionType(question, register, errors, isEditSubmissionDisabled)
           )}
-          <div className="flex justify-between mt-9">
+          <div className="mt-9 flex justify-between">
             <button type="button" className="button dark" onClick={() => router.back()}>
               Back
             </button>
             {/* dont show submit button when looking at results */}
             {showSubmitButton && (
-              <button type="submit" className="button secondary">
+              <button data-testid="submitResponseButton" type="submit" className="button secondary">
                 Submit response
               </button>
             )}
 
             {showEditSubmission && (
               <button
+                data-testid="deleteSubmissionButton"
                 type="button"
                 className="button primary"
                 onClick={() => confirmDeleteModal(post.id)}
@@ -151,13 +150,13 @@ const ResponseSubmission = ({
             )}
 
             {showEditSubmission && (
-              <button type="submit" className="button secondary">
+              <button data-testid="editSubmissionButton" type="submit" className="button secondary">
                 Edit submission
               </button>
             )}
           </div>
         </form>
-        <DevTool control={control} /> {/* set up the dev tool */}
+        {/* <DevTool control={control} />  */}
       </section>
     </>
   );

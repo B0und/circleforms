@@ -49,8 +49,14 @@ const NestedOptionFieldArray = ({ nestIndex }: INestedOptionFieldArray) => {
     <div className="flex flex-col gap-6">
       {fields.map((field, ind) => {
         return (
-          <div key={field.id} className="flex gap-x-2 items-center">
-            <ConditionalInput remove={remove} nestIndex={nestIndex} index={ind} control={control} />
+          <div key={field.id} className="flex items-center gap-x-2">
+            <ConditionalInput
+              data-testid={`input-${field}-${ind}`}
+              remove={remove}
+              nestIndex={nestIndex}
+              index={ind}
+              control={control}
+            />
           </div>
         );
       })}
